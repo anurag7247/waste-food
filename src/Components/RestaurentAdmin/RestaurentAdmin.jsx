@@ -1,7 +1,16 @@
+// import React from 'react'
 
-function RestaurentAdmin() {
+import Form from "./Form"
+import Table from "./Table"
+
+const RestaurentAdmin = () => {
   return (
-    <div>RestaurentAdmin</div>
+   <>
+   <div className="bg-slate-900">
+   <Form/>
+   <Table/>
+   </div>
+   </>
   )
 }
 

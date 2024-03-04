@@ -10,6 +10,8 @@ import Contact from './Components/Contact/Contact'
 import Admin from './Components/Admin/Admin'
 import AdminLogin from './Components/AdminLogin/AdminLogin'
 import RestaurentAdmin from './Components/RestaurentAdmin/RestaurentAdmin'
+import { ResAdminProvider } from './Components/RestaurentAdmin/ContextResAdmin/ContextResAdmin'
+
 
 // const router = createBrowserRouter([
 //   {
@@ -53,6 +55,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <ResAdminProvider>
   <RouterProvider router={router} />
+    </ResAdminProvider>
   </React.StrictMode>,
 )

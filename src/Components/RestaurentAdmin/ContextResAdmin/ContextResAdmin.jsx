@@ -1,6 +1,8 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { addDoc, collection, onSnapshot } from "@firebase/firestore";
+import { createContext, useContext } from "react";
+import { getDoc, doc, updateDoc } from "@firebase/firestore";
 import { firestore } from "../../../Firebase/firebase";
+import { useFormContext } from "../../Admin/Context/FormContext";
+import { useResAdminLogin } from "../../RestaurentAdminLogin/Context/ResAdmCon";
 
 const ResAdminContext = createContext();
 
@@ -9,34 +11,43 @@ export function useResAdmin() {
 }
 
 export function ResAdminProvider({ children }) {
-  const [itemData, setItemData] = useState({ name: '', idno: '' });
-  const [sItemData, setSItemData] = useState([]);
+  const { items, setItems } = useFormContext();
+  const { userData } = useResAdminLogin();
 
   const handleChange = (e) => {
-    setItemData({ ...itemData, name: e.target.value });
+    setItems([e.target.value]);
   };
 
   const handleSubmit = async () => {
-    await addDoc(collection(firestore, "RestaurentAdmin"), itemData);
-    alert("added");
+    try {
+      // Get the existing document from Firestore
+      const docRef = doc(firestore, "courseData", userData.idno);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // If the document exists, update the 'items' array
+        const existingItems = docSnap.data().items || []; // Existing items array or empty array
+        const updatedItems = [...existingItems, ...items]; // Combine existing items with new items
+        await updateDoc(docRef, { items: updatedItems });
+        alert("Items updated successfully");
+      } else {
+        alert("Document does not exist");
+      }
+    } catch (error) {
+      console.error("Error updating items: ", error);
+      alert("Failed to update items");
+    }
   };
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(collection(firestore, "RestaurentAdmin"), (querySnapshot) => {
-      const myarray = querySnapshot.docs.map((doc) => ({ ...doc.data(), idno: doc.id }));
-      setSItemData(myarray);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   const contextValue = {
-    itemData,
+    items,
     handleChange,
-    setItemData,
     handleSubmit,
-    sItemData,
   };
 
-  return <ResAdminContext.Provider value={contextValue}>{children}</ResAdminContext.Provider>;
+  return (
+    <ResAdminContext.Provider value={contextValue}>
+      {children}
+    </ResAdminContext.Provider>
+  );
 }

@@ -11,6 +11,10 @@ import Admin from './Components/Admin/Admin'
 import AdminLogin from './Components/AdminLogin/AdminLogin'
 import RestaurentAdmin from './Components/RestaurentAdmin/RestaurentAdmin'
 import { ResAdminProvider } from './Components/RestaurentAdmin/ContextResAdmin/ContextResAdmin'
+import RestaurentTemplate from './Components/RestaurentPage/RestaurentTemplate'
+import { FormProvider } from './Components/Admin/Context/FormContext'
+import RestaurentAdminLogin from './Components/RestaurentAdminLogin/RestaurentAdminLogin'
+import { ResAdmProvider } from './Components/RestaurentAdminLogin/Context/ResAdmCon'
 
 
 // const router = createBrowserRouter([
@@ -48,6 +52,8 @@ const router = createBrowserRouter(
       <Route path='admin-login' element={<AdminLogin/>} />
       <Route path='-admin' element={<Admin/>} />
       <Route path='restaurantAdmin' element={<RestaurentAdmin/>} />
+      <Route path='restaurant-temp' element={<RestaurentTemplate/>} />
+      <Route path='-restaurantlogin' element={<RestaurentAdminLogin/>} />
 
     </Route>
   )
@@ -55,8 +61,12 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <ResAdmProvider>
+    <FormProvider>
     <ResAdminProvider>
   <RouterProvider router={router} />
     </ResAdminProvider>
+    </FormProvider>
+    </ResAdmProvider>
   </React.StrictMode>,
 )

@@ -3,7 +3,7 @@ import { useResAdmin } from "./ContextResAdmin/ContextResAdmin"
 
 
 const Form = () => {
-    const {itemData, handleChange, handleSubmit} = useResAdmin();
+    const {items, handleChange, handleSubmit} = useResAdmin();
     return (
       <>
         
@@ -17,7 +17,7 @@ const Form = () => {
                   handleSubmit();
                 }}
                 >
-                <input type="text" className=" px-52 py-2 rounded-xl" value={itemData.name} onChange={handleChange} />
+                <input type="text" className=" px-52 py-2 rounded-xl" value={items} onChange={handleChange} />
                 <button className="px-4 py-2 rounded-lg nd text-white bg-blue-600 ml-2 hover:bg-yellow-400 hover:text-black">Submit</button>
                 </form>
                 

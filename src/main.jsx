@@ -15,6 +15,7 @@ import RestaurentTemplate from './Components/RestaurentPage/RestaurentTemplate'
 import { FormProvider } from './Components/Admin/Context/FormContext'
 import RestaurentAdminLogin from './Components/RestaurentAdminLogin/RestaurentAdminLogin'
 import { ResAdmProvider } from './Components/RestaurentAdminLogin/Context/ResAdmCon'
+import { RestaurantsProvider } from './Components/Restaurents/RestaurentsContext/RestaurentContext'
 
 
 // const router = createBrowserRouter([
@@ -61,6 +62,7 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <RestaurantsProvider>
     <ResAdmProvider>
     <FormProvider>
     <ResAdminProvider>
@@ -68,5 +70,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </ResAdminProvider>
     </FormProvider>
     </ResAdmProvider>
+    </RestaurantsProvider>
   </React.StrictMode>,
 )

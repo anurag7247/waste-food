@@ -1,4 +1,3 @@
-// import React from 'react';
 import { useResAdminLogin } from "../RestaurentAdminLogin/Context/ResAdmCon";
 
 function Table() {

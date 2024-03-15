@@ -142,20 +142,20 @@ export default function Form() {
         </form>
 
         <div className="justify-around flex flex-wrap gap-2">
-          {courseData.map((v, i) => (
-            <div key={i}>
-              <Card
-                urlImg={v.urlImg}
-                vegNonVeg={v.vegNonVeg}
-                restaurant={v.restaurant}
-                foodItems={v.foodItems}
-                address={v.address}
-                setData={() => {setData(v)}}
-                deleteData={() => {deleteData(v.idno)}}
-              />
-            </div>
-          ))}
-        </div>
+        {courseData.map((item, index) => (
+          <div key={index}>
+            <Card
+              urlImg={item.urlImg}
+              vegNonVeg={item.vegNonVeg}
+              restaurant={item.restaurant}
+              foodItems={item.foodItems}
+              address={item.address}
+              setData={() => setData(item)}
+              deleteData={() => deleteData(item.idno)}
+            />
+          </div>
+        ))}
+      </div>
       </div>
     </>
   );

@@ -1,7 +1,45 @@
+import { useEffect, useState } from "react";
 import { useResAdminLogin } from "../RestaurentAdminLogin/Context/ResAdmCon";
+import { addDoc, collection, query, onSnapshot, updateDoc, doc, deleteDoc} from "@firebase/firestore";
+import { firestore } from "../../Firebase/firebase";
+
 
 function Table() {
-  const { userData } = useResAdminLogin();
+  const { userData, resAdmReg, setUserData } = useResAdminLogin();
+  console.log('userdata',userData);
+  console.log('resadmRed',resAdmReg);
+
+  const [user, setUser] = useState()
+
+
+  useEffect(() => {
+    const q = query(collection(firestore, "logRest"));
+
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      let myarray = [];
+      querySnapshot.forEach((d) => {
+        myarray.push({ ...d.data(), idno: d.id });
+      });
+      // 
+      console.log('tabel',myarray[0]);
+      let logData = myarray[0];
+
+      console.log('logdata',logData)
+
+      for (let i of resAdmReg) {
+        if (i.email === logData.email && i.password === logData.pwd) {
+          setUser(i);
+           console.log('i',i);
+           setUserData(i);
+          // console.log(userData);
+          break;
+        }
+      }
+
+    });
+
+    return () => unsub();
+  }, [resAdmReg]);
 
   return (
     <div className="justify-center flex">
@@ -19,9 +57,9 @@ function Table() {
                 Btn
               </th>
             </tr>
-          </thead>
+          </thead> 
           <tbody>
-            {userData.items && userData.items.map((v, i) => (
+            {user && user.items.map((v, i) => (
               <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                 <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {v}

@@ -8,22 +8,32 @@ export default function Card({ urlImg, vegNonVeg, restaurant, foodItems, address
   const navigate = useNavigate();
 
   const handleClick = () => {
-    setValue(id);
-  };
-
-  useEffect(() => {
+     setValue(id);
     const fetchDataAndNavigate = async () => {
       const selectedData = courseData.find(data => data.idno === value);
       if (selectedData) {
         await setResData(selectedData);
         console.log(selectedData); // Log selectedData after it's been updated
-        navigate("/restaurant-temp");
+        navigate(`/restaurant-temp/${id}`);
       }
     };
 
     fetchDataAndNavigate();
+  };
+
+  // useEffect(() => {
+  //   const fetchDataAndNavigate = async () => {
+  //     const selectedData = courseData.find(data => data.idno === value);
+  //     if (selectedData) {
+  //       await setResData(selectedData);
+  //       console.log(selectedData); // Log selectedData after it's been updated
+  //       navigate(`/restaurant-temp/${value}`);
+  //     }
+  //   };
+
+  //   fetchDataAndNavigate();
     
-  }, [value, courseData, setResData, navigate]);
+  // }, [value, courseData, setResData, navigate]);
 
   return (
     <div className="mb-5 bg-fuchsia-900 shadow-2xl shadow-black font-sans w-[300px] border border-gray-200 rounded-lg mt-10 dark:border-gray-700">

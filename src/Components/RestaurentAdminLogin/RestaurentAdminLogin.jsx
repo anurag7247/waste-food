@@ -1,27 +1,51 @@
 import { useNavigate } from "react-router-dom";
 import { useResAdminLogin } from "./Context/ResAdmCon";
+import { useRestaurants } from "../Restaurents/RestaurentsContext/RestaurentContext";
+import { addDoc, collection, getDocs, deleteDoc } from "@firebase/firestore";
+import { firestore } from "../../Firebase/firebase";
 
 function RestaurentAdminLogin() {
-  const { change,  data, resAdmReg ,setUserFound, setData,Login} = useResAdminLogin();
+  const { change, data, resAdmReg, setUserFound, setData, Login } =
+    useResAdminLogin();
+  const { isRestaurant, setIsRestaurent } = useRestaurants();
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+
     Login();
-    
-    const found = resAdmReg.some((i) => i.email === data.email && i.password === data.pwd);
+
+    const found = resAdmReg.some(
+      (i) => i.email === data.email && i.password === data.pwd
+    );
 
     if (found) {
+      setIsRestaurent(true);
       setUserFound(true);
-      alert('Correct id and password');
-      navigate("/restaurantAdmin")
+
+      const emptyAndAddResLog = async () => {
+        // Fetch all documents in the collection
+        const logRestRef = collection(firestore, "logRest");
+        const logRestSnapshot = await getDocs(logRestRef);
+
+        // Delete all existing documents in the collection
+        logRestSnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+        });
+
+        // Add the new document
+        await addDoc(collection(firestore, "logRest"), data);
+      };
+
+      emptyAndAddResLog();
+
+      alert("Correct id and password");
+      navigate("/restaurantAdmin");
     } else {
       setUserFound(false);
-      alert('Invalid id and password');
+      alert("Invalid id and password");
     }
 
     setData({ email: "", pwd: "" });
-  
   };
 
   return (
@@ -31,7 +55,10 @@ function RestaurentAdminLogin() {
           <div className="w-[500px] rounded-xl mt-36 mb-36 bg-slate-800">
             <div className="max-w-[400px] my-12 w-full mx-auto ">
               <div className="flex flex-col px-8">
-                <label htmlFor="email" className="ml-2 text-white text-lg font-bold">
+                <label
+                  htmlFor="email"
+                  className="ml-2 text-white text-lg font-bold"
+                >
                   Enter Email:
                 </label>
                 <input
@@ -45,7 +72,10 @@ function RestaurentAdminLogin() {
                 />
               </div>
               <div className="flex flex-col px-8">
-                <label htmlFor="password" className="ml-2 mt-3 text-lg text-white font-bold">
+                <label
+                  htmlFor="password"
+                  className="ml-2 mt-3 text-lg text-white font-bold"
+                >
                   Enter Password:
                 </label>
                 <input

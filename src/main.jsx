@@ -53,7 +53,7 @@ const router = createBrowserRouter(
       <Route path='admin-login' element={<AdminLogin/>} />
       <Route path='-admin' element={<Admin/>} />
       <Route path='restaurantAdmin' element={<RestaurentAdmin/>} />
-      <Route path='restaurant-temp' element={<RestaurentTemplate/>} />
+      <Route path='restaurant-temp/:id' element={<RestaurentTemplate/>} />
       <Route path='-restaurantlogin' element={<RestaurentAdminLogin/>} />
 
     </Route>

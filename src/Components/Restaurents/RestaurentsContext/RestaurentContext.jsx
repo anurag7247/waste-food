@@ -12,6 +12,7 @@ export const RestaurantsProvider = ({ children }) => {
   const [courseData, setCourseData] = useState([]);
   const [value, setValue] = useState(null); // Ensure value is initialized
   const [resData, setResData] = useState();
+  const [isRestaurant,setIsRestaurent] = useState(false);
 
   useEffect(() => {
     const q = query(collection(firestore, "courseData"));
@@ -28,7 +29,7 @@ export const RestaurantsProvider = ({ children }) => {
   }, []); 
 
   return (
-    <RestaurantsContext.Provider value={{ courseData, value, setValue, resData ,setResData }}>
+    <RestaurantsContext.Provider value={{ courseData, value, setValue, resData ,setResData ,isRestaurant, setIsRestaurent}}>
       {children}
     </RestaurantsContext.Provider>
   );

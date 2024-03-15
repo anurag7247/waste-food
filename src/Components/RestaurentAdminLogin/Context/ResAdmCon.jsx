@@ -15,8 +15,24 @@ export function ResAdmProvider({ children }) {
   const [userData, setUserData] = useState([]);
   // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot(
+  // useEffect(() => {
+  //   const unsubscribe = onSnapshot(
+  //     collection(firestore, "courseData"),
+  //     (querySnapshot) => {
+  //       const myarray = querySnapshot.docs.map((doc) => ({
+  //         ...doc.data(),
+  //         idno: doc.id,
+  //       }));
+  //       setResAdmReg(myarray);
+  //       // setLoading(false);
+  //     }
+  //   );
+
+  //   return unsubscribe;
+  // }, []);
+
+  const getResData = () => {
+      const unsubscribe = onSnapshot(
       collection(firestore, "courseData"),
       (querySnapshot) => {
         const myarray = querySnapshot.docs.map((doc) => ({
@@ -29,7 +45,12 @@ export function ResAdmProvider({ children }) {
     );
 
     return unsubscribe;
-  }, []);
+  }
+
+  useEffect(() => {
+    getResData();
+  }, [])
+  
 
   const change = (e) => {
     setData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
@@ -45,7 +66,7 @@ export function ResAdmProvider({ children }) {
     }
   };
   useEffect(() => {
-    console.log(userData); // Log userData whenever it changes
+    console.log('context user data',userData); // Log userData whenever it changes
   }, [userData]);
 
   //   const found = resAdmReg.some((i) => i.email === data.email && i.password === data.pwd);
@@ -71,6 +92,7 @@ export function ResAdmProvider({ children }) {
     userFound,
     Login,
     userData,
+    setUserData
   };
 
   return (

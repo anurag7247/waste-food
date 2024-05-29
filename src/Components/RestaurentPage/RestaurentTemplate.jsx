@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDoc, doc } from "@firebase/firestore";
 import { firestore } from '../../Firebase/firebase';
@@ -83,6 +83,15 @@ const RestaurantTemplate = () => {
                                 <i className="fa fa-map-marker" aria-hidden="true"></i>
                                {resData.address}
                             </p> }
+                            
+                        </div>
+                        <div className="pl-1 py-2">
+                           
+                            <p className="truncate font-normal text-gray-700 dark:text-gray-400">
+                                <i className="fa fa-map-marker" aria-hidden="true"></i>
+                              Contact:- +919111989822
+                            </p> 
+                            
                         </div>
                     </div>
                 </div>

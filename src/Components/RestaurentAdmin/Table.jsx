@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useResAdminLogin } from "../RestaurentAdminLogin/Context/ResAdmCon";
-import { addDoc, collection, query, onSnapshot, updateDoc, doc, deleteDoc} from "@firebase/firestore";
+import { collection, query, onSnapshot,} from "@firebase/firestore";
 import { firestore } from "../../Firebase/firebase";
 
 
@@ -39,7 +39,7 @@ function Table() {
     });
 
     return () => unsub();
-  }, [resAdmReg]);
+  }, [resAdmReg, setUserData]);
 
   return (
     <div className="justify-center flex">
@@ -50,9 +50,9 @@ function Table() {
               <th scope="col" className="px-6 py-3">
                 Item Name
               </th>
-              <th scope="col" className="px-6 py-3">
+              {/* <th scope="col" className="px-6 py-3">
                 Update Btn
-              </th>
+              </th> */}
               <th scope="col" className="px-6 py-3">
                 Btn
               </th>
@@ -64,9 +64,9 @@ function Table() {
                 <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {v}
                 </td>
-                <td scope="row">
+                {/* <td scope="row">
                   <button className="bg-blue-600 py-1 px-2 rounded-md text-white">Update</button>
-                </td>
+                </td> */}
                 <td scope="row">
                   <button className="bg-red-600 py-1 px-2 rounded-md text-white">Delete</button>
                 </td>

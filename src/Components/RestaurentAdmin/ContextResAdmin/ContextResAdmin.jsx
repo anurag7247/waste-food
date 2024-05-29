@@ -20,14 +20,13 @@ export function ResAdminProvider({ children }) {
 
   const handleSubmit = async () => {
     try {
-      // Get the existing document from Firestore
+     
       const docRef = doc(firestore, "courseData", userData.idno);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        // If the document exists, update the 'items' array
-        const existingItems = docSnap.data().items || []; // Existing items array or empty array
-        const updatedItems = [...existingItems, ...items]; // Combine existing items with new items
+        const existingItems = docSnap.data().items || []; 
+        const updatedItems = [...existingItems, ...items]; 
         await updateDoc(docRef, { items: updatedItems });
         alert("Items updated successfully");
       } else {

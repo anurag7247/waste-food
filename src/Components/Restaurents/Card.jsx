@@ -7,20 +7,22 @@ export default function Card({ urlImg, vegNonVeg, restaurant, foodItems, address
   const { value, setValue, courseData, setResData } = useRestaurants();
   const navigate = useNavigate();
 
-  const handleClick = () => {
-     setValue(id);
-    const fetchDataAndNavigate = async () => {
-      const selectedData = courseData.find(data => data.idno === value);
+  useEffect(() => {
+    const fetchDataAndSetValue = async () => {
+      const selectedData = courseData.find((data) => data.idno === id);
       if (selectedData) {
         await setResData(selectedData);
-        console.log(selectedData); // Log selectedData after it's been updated
-        navigate(`/restaurant-temp/${id}`);
+        setValue(id);
       }
     };
+    fetchDataAndSetValue();
+  }, [id, courseData, setResData, setValue]);
 
-    fetchDataAndNavigate();
+  const handleClick = async () => {
+    console.log('Handling click...');
+    navigate(`/restaurant-temp/${id}`);
+    console.log('Navigation complete.');
   };
-
   // useEffect(() => {
   //   const fetchDataAndNavigate = async () => {
   //     const selectedData = courseData.find(data => data.idno === value);
